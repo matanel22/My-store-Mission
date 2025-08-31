@@ -8,7 +8,7 @@ interface CardProps {
 
 const Card = ({ children, onClick, onDelete }: CardProps) => {
   return (
-    <div style={{ margin: "16px", position: "relative" }}>
+    <div style={{ margin: "16px" }}>
       <div
         onClick={onClick}
         style={{

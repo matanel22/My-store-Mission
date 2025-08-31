@@ -19,23 +19,20 @@ const InputHF = ({
   disabled = false,
 }: InputHFProps) => {
   const [isFocused, setIsFocused] = useState(false);
-  const {
-    control,
-    formState: { errors },
-  } = useFormContext();
-
+  const { control, formState: { errors } } = useFormContext();
+  
   const hasError = errors[name];
 
   return (
-    <div style={{ marginBottom: "24px" }}>
+    <div style={{ marginBottom: '24px' }}>
       {label && (
-        <label
+        <label 
           style={{
-            display: "block",
-            marginBottom: "8px",
-            fontWeight: "600",
-            fontSize: "14px",
-            color: "#374151",
+            display: 'block',
+            marginBottom: '8px',
+            fontWeight: '600',
+            fontSize: '14px',
+            color: '#374151'
           }}
         >
           {label}
@@ -58,32 +55,28 @@ const InputHF = ({
               field.onBlur();
             }}
             style={{
-              width: "100%",
-              padding: "12px 16px",
-              fontSize: "16px",
-              border: `2px solid ${
-                hasError ? "#ef4444" : isFocused ? "#3b82f6" : "#d1d5db"
-              }`,
-              borderRadius: "8px",
-              outline: "none",
-              transition: "all 0.2s ease-in-out",
-              backgroundColor: disabled ? "#f9fafb" : "#ffffff",
-              color: disabled ? "#9ca3af" : "#1f2937",
-              boxSizing: "border-box",
+              width: '100%',
+              padding: '12px 16px',
+              fontSize: '16px',
+              border: `2px solid ${hasError ? '#ef4444' : isFocused ? '#3b82f6' : '#d1d5db'}`,
+              borderRadius: '8px',
+              outline: 'none',
+              transition: 'all 0.2s ease-in-out',
+              backgroundColor: disabled ? '#f9fafb' : '#ffffff',
+              color: disabled ? '#9ca3af' : '#1f2937',
+              boxSizing: 'border-box'
             }}
           />
         )}
       />
       {hasError && (
-        <p
-          style={{
-            color: "#ef4444",
-            fontSize: "12px",
-            marginTop: "4px",
-            marginBottom: "0",
-          }}
-        >
-          {(hasError as any)?.message || "This field is required"}
+        <p style={{
+          color: '#ef4444',
+          fontSize: '12px',
+          marginTop: '4px',
+          marginBottom: '0'
+        }}>
+          {(hasError as any)?.message || 'This field is required'}
         </p>
       )}
     </div>

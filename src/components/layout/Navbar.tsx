@@ -2,6 +2,9 @@ import { useState } from "react";
 import ButtonUI from "../common/ButtonUI";
 import TextInput from "../common/fields/TextInput";
 import SelectInput from "../common/fields/SelectInput";
+import MainForm from "../common/mainForm";
+import { Product } from "../../utils/localStorage";
+import { Dispatch, SetStateAction } from "react";
 
 interface NavbarProps {
   onSearch: (searchTerm: string) => void;
@@ -9,9 +12,11 @@ interface NavbarProps {
   onReset?: () => void;
   searchValue: string;
   orderValue: string;
+  setProducts: Dispatch<SetStateAction<Product[]>>;
 }
 
 const Navbar = ({
+  setProducts,
   onSearch,
   onOrderChange,
   onReset,
@@ -47,7 +52,13 @@ const Navbar = ({
         flexWrap: "wrap",
       }}
     >
-      {/* {isOpen && <ViewItems setIsOpen={setIsOpen} isOpen={isOpen} />} */}
+      {isOpen && (
+        <MainForm
+          isOpen={isOpen}
+          setIsOpen={setIsOpen}
+          setProducts={setProducts}
+        />
+      )}
 
       <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
         <label style={{ fontSize: "14px", fontWeight: "bold" }}>Search:</label>

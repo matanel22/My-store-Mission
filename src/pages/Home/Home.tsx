@@ -14,7 +14,6 @@ import {
 } from "../../utils/localStorage";
 
 const Home = () => {
-  // Initialize products from localStorage or fallback to default data
   const [products, setProducts] = useState<Product[]>(() => {
     if (isLocalStorageAvailable()) {
       const savedProducts = loadProductsFromStorage();
@@ -23,7 +22,6 @@ const Home = () => {
     return ProductDetails;
   });
 
-  // Initialize filter state from localStorage or use defaults
   const [currentPage, setCurrentPage] = useState(() => {
     if (isLocalStorageAvailable()) {
       const savedState = loadFilterStateFromStorage();
@@ -51,17 +49,15 @@ const Home = () => {
   const [saveStatus, setSaveStatus] = useState<string>("");
   const itemsPerPage = 2;
 
-  // Save products to localStorage whenever products change
   useEffect(() => {
     if (isLocalStorageAvailable()) {
       saveProductsToStorage(products);
-      setSaveStatus("Data saved ✓");
+
       const timer = setTimeout(() => setSaveStatus(""), 2000);
       return () => clearTimeout(timer);
     }
   }, [products]);
 
-  // Save filter state to localStorage whenever filter state changes
   useEffect(() => {
     if (isLocalStorageAvailable()) {
       const filterState: FilterState = {
@@ -73,7 +69,6 @@ const Home = () => {
     }
   }, [searchTerm, orderBy, currentPage]);
 
-  // Show initial load status
   useEffect(() => {
     if (isLocalStorageAvailable()) {
       const savedProducts = loadProductsFromStorage();
@@ -91,7 +86,6 @@ const Home = () => {
     }
   }, []);
 
-  // Filter and sort products based on search term and order
   const filteredAndSortedProducts = useMemo(() => {
     let filtered = products.filter(
       (product) =>
@@ -99,7 +93,6 @@ const Home = () => {
         product.description.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-    // Sort based on orderBy value
     switch (orderBy) {
       case "name":
         filtered.sort((a, b) => a.name.localeCompare(b.name));
@@ -126,7 +119,6 @@ const Home = () => {
   const totalItems = filteredAndSortedProducts.length;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
-  // Validate and adjust current page if it's out of bounds
   useEffect(() => {
     if (totalPages > 0 && currentPage > totalPages) {
       setCurrentPage(totalPages);
@@ -147,7 +139,6 @@ const Home = () => {
         (product) => product.id !== productId
       );
 
-      // Adjust current page if necessary
       const newTotalPages = Math.ceil(updatedProducts.length / itemsPerPage);
       if (currentPage > newTotalPages && newTotalPages > 0) {
         setCurrentPage(newTotalPages);
@@ -161,12 +152,12 @@ const Home = () => {
 
   const handleSearch = (searchValue: string) => {
     setSearchTerm(searchValue);
-    setCurrentPage(1); // Reset to first page when searching
+    setCurrentPage(1);
   };
 
   const handleOrderChange = (orderValue: string) => {
     setOrderBy(orderValue);
-    setCurrentPage(1); // Reset to first page when changing order
+    setCurrentPage(1);
   };
 
   const handleResetData = () => {
@@ -246,6 +237,7 @@ const Home = () => {
         onReset={handleResetData}
         searchValue={searchTerm}
         orderValue={orderBy}
+        setProducts={setProducts}
       />
       {currentItems.length > 0 ? (
         currentItems.map((item) => (

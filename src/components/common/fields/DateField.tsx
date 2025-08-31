@@ -1,65 +1,81 @@
-import React from "react";
-import { useController, useForm, useFormContext } from "react-hook-form";
-import styled from "styled-components";
+import React, { useState } from "react";
+import { Controller, useFormContext } from "react-hook-form";
 
-interface IProps {
+interface DateFieldProps {
   name: string;
-  type: string;
-
+  label?: string;
   validate?: any;
 }
 
-const DateField = ({
-  name,
-  type,
-
-  validate,
-}: IProps) => {
-  const { control } = useFormContext();
+const DateField = ({ name, label, validate }: DateFieldProps) => {
+  const [isFocused, setIsFocused] = useState(false);
   const {
-    field: { onBlur, onChange, ref, value },
-  } = useController({
-    name,
     control,
-    // defaultValue: defaultValue || "",
-    rules: { validate },
-  });
-  // console.log(value);
+    formState: { errors },
+  } = useFormContext();
+
+  const hasError = errors[name];
 
   return (
-    <>
-      <InputDateField
-        type={type}
-        {...{ onBlur, onChange, ref, value }}
-        onChange={(e) => {
-          onChange(e.target.value);
-        }}
-        ref={ref}
-        onBlur={onBlur}
-        value={value}
-        // placeholder={placeholder}
-        // DateCalender="dd/MM/yyyy"
+    <div style={{ marginBottom: "24px" }}>
+      {label && (
+        <label
+          style={{
+            display: "block",
+            marginBottom: "8px",
+            fontWeight: "600",
+            fontSize: "14px",
+            color: "#374151",
+          }}
+        >
+          {label}
+        </label>
+      )}
+      <Controller
+        name={name}
+        control={control}
+        rules={validate}
+        defaultValue=""
+        render={({ field }) => (
+          <input
+            {...field}
+            type="date"
+            onFocus={() => setIsFocused(true)}
+            onBlur={(e) => {
+              setIsFocused(false);
+              field.onBlur();
+            }}
+            style={{
+              width: "100%",
+              padding: "12px 16px",
+              fontSize: "16px",
+              border: `2px solid ${
+                hasError ? "#ef4444" : isFocused ? "#3b82f6" : "#d1d5db"
+              }`,
+              borderRadius: "8px",
+              outline: "none",
+              transition: "all 0.2s ease-in-out",
+              backgroundColor: "#ffffff",
+              color: "#1f2937",
+              boxSizing: "border-box",
+            }}
+          />
+        )}
       />
-    </>
+      {hasError && (
+        <p
+          style={{
+            color: "#ef4444",
+            fontSize: "12px",
+            marginTop: "4px",
+            marginBottom: "0",
+          }}
+        >
+          {(hasError as any)?.message || "This field is required"}
+        </p>
+      )}
+    </div>
   );
 };
 
 export default DateField;
-
-export const InputDateField = styled.input`
-  display: flex;
-  flex-direction: column;
-
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  margin-bottom: 20px;
-  padding: 19px;
-  transition: 0.3s;
-  &::placeholder {
-    color: #ccc;
-    opacity: 1;
-  }
-  &:focus-within {
-    border-color: #8c7569;
-  }
-`;
