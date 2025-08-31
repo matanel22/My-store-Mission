@@ -6,6 +6,9 @@ import Navbar from '../../components/layout/Navbar';
 import Footer from '../../components/layout/Footer';
 
 const Home = () => {
+  const handleDelCard = () => {
+    console.log('Card deleted!');
+  };
   return (
     <div>
       <h1>My Store</h1>
@@ -16,7 +19,6 @@ const Home = () => {
           <div>{item.description}</div>
           <div>Price: ${item.price}</div>
           <div>Start Date: {item.startDate.toDateString()}</div>
-          <ButtonUI onClick={() => console.log('Button Delete!')}>Delete</ButtonUI>
         </Card>
       ))}
     <Footer />

@@ -7,8 +7,10 @@ interface CardProps {
 
 const Card = ({ children, onClick }: CardProps) => {
   return (
-    <div onClick={onClick} style={{ border: '1px solid #ccc', padding: '16px', borderRadius: '8px' }}>
-      {children}
+    <div style={{ margin: '16px', cursor: 'pointer' }}>
+      <div onClick={onClick} style={{ border: '1px solid #ccc', padding: '8px', borderRadius: '8px' }}>
+        {children}
+      </div>
     </div>
   );
 };
