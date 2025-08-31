@@ -3,6 +3,7 @@ import ProductDetails from '../../services/ProductDetails';
 import Card from '../../UI/Card';
 import ButtonUI from '../../components/common/ButtonUI';
 import Navbar from '../../components/layout/Navbar';
+import Footer from '../../components/layout/Footer';
 
 const Home = () => {
   return (
@@ -18,6 +19,8 @@ const Home = () => {
           <ButtonUI onClick={() => console.log('Button Delete!')}>Delete</ButtonUI>
         </Card>
       ))}
+    <Footer />
+
     </div>
   );
 };
