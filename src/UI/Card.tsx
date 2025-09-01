@@ -1,10 +1,7 @@
 import React from "react";
+import { CardProps } from "../types/UIInterface/cardInterFace";
 
-interface CardProps {
-  children: React.ReactNode;
-  onClick: () => void;
-  onDelete: () => void;
-}
+
 
 const Card = ({ children, onClick, onDelete }: CardProps) => {
   return (

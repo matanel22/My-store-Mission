@@ -1,13 +1,7 @@
 import React from "react";
+import { ButtonUIProps } from "../../types/UIInterface/ButtonInterface";
 
-interface ButtonUIProps {
-  backgroundColor?: string;
-  onClick?: () => void;
-  children: React.ReactNode;
-  disabled?: boolean;
-  style?: React.CSSProperties;
-  type?: "button" | "submit" | "reset";
-}
+
 
 const ButtonUI = ({
   backgroundColor,

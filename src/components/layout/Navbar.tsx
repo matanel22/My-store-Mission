@@ -3,8 +3,9 @@ import ButtonUI from "../common/ButtonUI";
 import TextInput from "../common/fields/TextInput";
 import SelectInput from "../common/fields/SelectInput";
 import MainForm from "../common/mainForm";
-import { Product } from "../../utils/localStorage";
+
 import { Dispatch, SetStateAction } from "react";
+import { Product } from "../../types/productType";
 
 interface NavbarProps {
   onSearch: (searchTerm: string) => void;
@@ -14,7 +15,13 @@ interface NavbarProps {
   orderValue: string;
   setProducts: Dispatch<SetStateAction<Product[]>>;
 }
-
+const orderOptions = [
+    { value: "name", label: "Name" },
+    { value: "price-low", label: "Price: Low to High" },
+    { value: "price-high", label: "Price: High to Low" },
+    { value: "date-newest", label: "Date: Newest First" },
+    { value: "date-oldest", label: "Date: Oldest First" },
+  ];
 const Navbar = ({
   setProducts,
   onSearch,
@@ -25,13 +32,7 @@ const Navbar = ({
 }: NavbarProps) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
-  const orderOptions = [
-    { value: "name", label: "Name" },
-    { value: "price-low", label: "Price: Low to High" },
-    { value: "price-high", label: "Price: High to Low" },
-    { value: "date-newest", label: "Date: Newest First" },
-    { value: "date-oldest", label: "Date: Oldest First" },
-  ];
+  
 
   const handleSearchChange = (value: string) => {
     onSearch(value);

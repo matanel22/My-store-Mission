@@ -1,4 +1,5 @@
-import { Product } from "../utils/localStorage";
+import { Product } from "../types/productType";
+
 
 const ProductDetails: Product[] = [
   {
@@ -18,8 +19,8 @@ const ProductDetails: Product[] = [
   {
     name: "Product 3",
     id: 3,
-    description: "This is Product 3",
-    price: 15,
+    description: "This is Product 3 ",
+    price: 15, 
     startDate: new Date("2023-03-01"),
   },
 ];

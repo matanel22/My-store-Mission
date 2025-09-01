@@ -1,13 +1,8 @@
 import React, { useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
+import { TextAreaProps } from "../../../types/fieldsType";
 
-interface TextAreaProps {
-  name: string;
-  label?: string;
-  placeholder?: string;
-  validate?: any;
-  rows?: number;
-}
+
 
 const TextArea = ({
   name,

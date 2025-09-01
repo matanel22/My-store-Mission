@@ -1,18 +1,7 @@
+import { FilterState, Product } from "../types/productType";
 
 
-export interface Product {
-  id: number;
-  name: string;
-  description: string;
-  price: number;
-  startDate: Date;
-}
 
-export interface FilterState {
-  searchTerm: string;
-  orderBy: string;
-  currentPage: number;
-}
 
 const PRODUCTS_STORAGE_KEY = 'mystore_products';
 const FILTER_STATE_STORAGE_KEY = 'mystore_filter_state';

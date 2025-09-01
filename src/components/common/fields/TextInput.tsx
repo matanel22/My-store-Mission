@@ -1,8 +1,4 @@
-interface TextInputProps {
-  value: string;
-  onChange: (value: string) => void;
-  placeholder?: string;
-}
+import { TextInputProps } from "../../../types/fieldsType";
 
 const TextInput = ({ value, onChange, placeholder }: TextInputProps) => {
   return (

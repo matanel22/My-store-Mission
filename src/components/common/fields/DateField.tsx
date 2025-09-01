@@ -1,11 +1,8 @@
 import React, { useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
+import { DateFieldProps } from "../../../types/fieldsType";
 
-interface DateFieldProps {
-  name: string;
-  label?: string;
-  validate?: any;
-}
+
 
 const DateField = ({ name, label, validate }: DateFieldProps) => {
   const [isFocused, setIsFocused] = useState(false);
@@ -37,7 +34,7 @@ const DateField = ({ name, label, validate }: DateFieldProps) => {
         rules={validate}
         defaultValue={new Date()}
         render={({ field }) => {
-          // Convert Date object to yyyy-MM-dd string for input value
+         
           const valueAsString = field.value instanceof Date
             ? field.value.toISOString().split('T')[0]
             : field.value;

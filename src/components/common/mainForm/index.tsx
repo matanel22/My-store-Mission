@@ -4,8 +4,9 @@ import InputHF from "../fields/InputField";
 import DateField from "../fields/DateField";
 import TextArea from "../fields/TextArea";
 import Modal from "../Modal";
-import { Product } from "../../../utils/localStorage";
+
 import { Dispatch, SetStateAction, useEffect } from "react";
+import { Product } from "../../../types/productType";
 
 interface FormData {
   name: string;

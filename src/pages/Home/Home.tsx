@@ -9,12 +9,16 @@ import {
   isLocalStorageAvailable,
   saveFilterStateToStorage,
   loadFilterStateFromStorage,
-  Product,
-  FilterState,
+ 
 } from "../../utils/localStorage";
 import MainForm from "../../components/common/mainForm";
+import { FilterState, Product } from "../../types/productType";
 
 const Home = () => {
+   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [currentItem, setCurrentItem] = useState<Product | null>(null);
+  const [saveStatus, setSaveStatus] = useState<string>("");
+  const itemsPerPage = 2;
   const [products, setProducts] = useState<Product[]>(() => {
     if (isLocalStorageAvailable()) {
       const savedProducts = loadProductsFromStorage();
@@ -22,8 +26,7 @@ const Home = () => {
     }
     return ProductDetails;
   });
-    const [isOpen, setIsOpen] = useState<boolean>(false);
-const [currentItem, setCurrentItem] = useState<Product | null>(null);
+   
   const [currentPage, setCurrentPage] = useState(() => {
     if (isLocalStorageAvailable()) {
       const savedState = loadFilterStateFromStorage();
@@ -48,8 +51,7 @@ const [currentItem, setCurrentItem] = useState<Product | null>(null);
     return "name";
   });
 
-  const [saveStatus, setSaveStatus] = useState<string>("");
-  const itemsPerPage = 2;
+  
 
   useEffect(() => {
     if (isLocalStorageAvailable()) {
@@ -163,11 +165,7 @@ const [currentItem, setCurrentItem] = useState<Product | null>(null);
   };
 
   const handleResetData = () => {
-    if (
-      window.confirm(
-        "Are you sure you want to reset all data to original products? This will restore deleted items and clear all filters."
-      )
-    ) {
+    
       setProducts(ProductDetails);
       setCurrentPage(1);
       setSearchTerm("");
@@ -175,7 +173,7 @@ const [currentItem, setCurrentItem] = useState<Product | null>(null);
       setSaveStatus("Data reset");
       const timer = setTimeout(() => setSaveStatus(""), 2000);
       return () => clearTimeout(timer);
-    }
+    
   };
 
   const handlePrevPage = () => {
@@ -211,7 +209,7 @@ const [currentItem, setCurrentItem] = useState<Product | null>(null);
           {saveStatus}
         </div>
       )}
-      {/* Debug info - can be removed in production */}
+    
       {(searchTerm || orderBy !== "name" || currentPage > 1) && (
         <div
           style={{

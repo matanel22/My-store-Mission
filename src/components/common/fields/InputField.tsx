@@ -1,14 +1,8 @@
 import React, { useState } from "react";
 import { Controller, useFormContext } from "react-hook-form";
+import { InputHFProps } from "../../../types/fieldsType";
 
-interface InputHFProps {
-  name: string;
-  type?: string;
-  placeholder?: string;
-  label?: string;
-  validate?: any;
-  disabled?: boolean;
-}
+
 
 const InputHF = ({
   name,

@@ -7,9 +7,7 @@ const App = () => {
   return (
     <div>
       <Home />
-      {/* <Card onClick={() => alert('Card clicked!')}>
-        <p>This is a card component.</p>
-      </Card> */}
+      
     </div>
   );
 };
