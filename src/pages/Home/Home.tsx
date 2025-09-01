@@ -210,27 +210,7 @@ const Home = () => {
         </div>
       )}
     
-      {(searchTerm || orderBy !== "name" || currentPage > 1) && (
-        <div
-          style={{
-            background: "#f0f0f0",
-            padding: "8px 16px",
-            margin: "8px 0",
-            borderRadius: "4px",
-            fontSize: "12px",
-            color: "#666",
-            border: "1px solid #ddd",
-          }}
-        >
-          <strong>Active Filters:</strong>
-          {searchTerm && ` Search: "${searchTerm}"`}
-          {orderBy !== "name" && ` | Order: ${orderBy}`}
-          {currentPage > 1 && ` | Page: ${currentPage}`}
-          <span style={{ color: "#888", marginLeft: "8px" }}>
-            (preserved after refresh)
-          </span>
-        </div>
-      )}
+    
       <Navbar
         onSearch={handleSearch}
         onOrderChange={handleOrderChange}
@@ -249,9 +229,15 @@ const Home = () => {
             }}
             onDelete={() => handleDeleteCard(item.id)}
           >
-            <h2>{item.name}</h2>
-            <div>{item.description}</div>
-           
+            <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
+              <div style={{ width: "100px", height: "100px", background: "#f3f4f6", display: "flex", alignItems: "center", justifyContent: "center", borderRadius: "8px" }}>
+                  <img src="/product.svg"  style={{ width: "70px", height: "70px", objectFit: "contain" }} />
+              </div>
+              <div>
+                <h2 style={{ margin: 0, fontSize: "1.2rem", fontWeight: 700 }}>{item.name}</h2>
+                <div style={{ color: "#555", marginTop: "8px" }}>{item.description}</div>
+              </div>
+            </div>
           </Card>
         ))
       ) : (

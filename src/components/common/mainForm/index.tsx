@@ -4,7 +4,8 @@ import InputHF from "../fields/InputField";
 import DateField from "../fields/DateField";
 import TextArea from "../fields/TextArea";
 import Modal from "../Modal";
-
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { Dispatch, SetStateAction, useEffect } from "react";
 import { Product } from "../../../types/productType";
 
@@ -63,6 +64,8 @@ const MainForm = ({item, isOpen, setIsOpen, setProducts }: MainFormProps) => {
             prod.id === item.id ? { ...prod, ...data } : prod
           )
         );
+      toast.success('Product updated successfully!');
+
         reset();
       setIsOpen(false);
       } else {
@@ -77,7 +80,7 @@ const MainForm = ({item, isOpen, setIsOpen, setProducts }: MainFormProps) => {
           startDate: new Date(data.startDate),
         },
       ]);
-      alert("Product added successfully!");
+      toast.success('Product added successfully!');
       reset();
       setIsOpen(false);
     }
@@ -142,8 +145,8 @@ const MainForm = ({item, isOpen, setIsOpen, setProducts }: MainFormProps) => {
                   message: "Product name must be at least 2 characters",
                 },
                 maxLength: {
-                  value: 100,
-                  message: "Product name must be at most 100 characters",
+                  value: 30,
+                  message: "Product name must be at most 30 characters",
                 },
               }}
             />
@@ -173,6 +176,11 @@ const MainForm = ({item, isOpen, setIsOpen, setProducts }: MainFormProps) => {
                   value: 10,
                   message: "Description must be at least 10 characters",
                 },
+                maxLength: {
+                  value: 200,
+                  message: "Description must be at most 200 characters",
+                }
+
               }}
             />
 

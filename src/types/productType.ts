@@ -4,6 +4,7 @@ export interface Product {
   description: string;
   price: number;
   startDate: Date;
+  imageUrl?: React.FC<React.SVGProps<SVGSVGElement>>;
 }
 
 export interface FilterState {
