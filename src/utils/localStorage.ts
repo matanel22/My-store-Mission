@@ -22,7 +22,7 @@ export const saveProductsToStorage = (products: Product[]): void => {
   try {
     const serializedProducts = products.map(product => ({
       ...product,
-      startDate: product.startDate.toISOString()
+      startDate: product.startDate
     }));
     localStorage.setItem(PRODUCTS_STORAGE_KEY, JSON.stringify(serializedProducts));
   } catch (error) {

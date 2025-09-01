@@ -5,29 +5,30 @@ import DateField from "../fields/DateField";
 import TextArea from "../fields/TextArea";
 import Modal from "../Modal";
 import { Product } from "../../../utils/localStorage";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useEffect } from "react";
 
 interface FormData {
-  productName: string;
+  name: string;
   price: number;
   description: string;
-  startDate: string;
+  startDate: Date;
 }
 
 interface MainFormProps {
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
   setProducts: Dispatch<SetStateAction<Product[]>>;
+  item?: Product | null;
 }
 
-const MainForm = ({ isOpen, setIsOpen, setProducts }: MainFormProps) => {
+const MainForm = ({item, isOpen, setIsOpen, setProducts }: MainFormProps) => {
   const methods = useForm<FormData>({
     mode: "onBlur",
     defaultValues: {
-      productName: "",
+      name: "",
       price: 0,
       description: "",
-      startDate: "",
+      startDate: new Date(),
     },
   });
 
@@ -37,14 +38,39 @@ const MainForm = ({ isOpen, setIsOpen, setProducts }: MainFormProps) => {
     formState: { isSubmitting, isValid },
   } = methods;
 
+  useEffect(() => {
+    console.log("Current Item:", item);
+
+    if (item) {
+      reset({
+        name: item.name,
+        price: item.price,
+        description: item.description,
+        startDate: item.startDate,
+      });
+    }
+  }, [item, reset]);
+
   const onSubmit = async (data: FormData) => {
+    
+
     try {
-      console.log("Form Data:", data);
-      setProducts((prevProducts) => [
-        ...prevProducts,
-        {
-          id: Date.now(),
-          name: data.productName,
+      if (item) {
+        
+        setProducts((prevProducts) =>
+          prevProducts.map((prod: Product) =>
+            prod.id === item.id ? { ...prod, ...data } : prod
+          )
+        );
+        reset();
+      setIsOpen(false);
+      } else {
+        
+        setProducts((prevProducts) => [
+          ...prevProducts,
+          {
+            id: Date.now(),
+          name: data.name,
           price: data.price,
           description: data.description,
           startDate: new Date(data.startDate),
@@ -53,6 +79,7 @@ const MainForm = ({ isOpen, setIsOpen, setProducts }: MainFormProps) => {
       alert("Product added successfully!");
       reset();
       setIsOpen(false);
+    }
     } catch (error) {
       console.error("Error submitting form:", error);
     }
@@ -67,6 +94,7 @@ const MainForm = ({ isOpen, setIsOpen, setProducts }: MainFormProps) => {
     <Modal isOpen={isOpen} onClose={handleClose}>
       <div
         style={{
+
           padding: "32px",
           maxWidth: "500px",
           width: "100%",
@@ -76,7 +104,7 @@ const MainForm = ({ isOpen, setIsOpen, setProducts }: MainFormProps) => {
           margin: "20px",
         }}
       >
-        {/* Header */}
+        
         <div style={{ marginBottom: "32px", textAlign: "center" }}>
           <h2
             style={{
@@ -86,7 +114,7 @@ const MainForm = ({ isOpen, setIsOpen, setProducts }: MainFormProps) => {
               margin: "0 0 8px 0",
             }}
           >
-            Add New Product
+            {item ? "Edit Product" : "Add New Product"}
           </h2>
           <p
             style={{
@@ -95,14 +123,14 @@ const MainForm = ({ isOpen, setIsOpen, setProducts }: MainFormProps) => {
               margin: "0",
             }}
           >
-            Fill in the details below to add a new product to your store
+           
           </p>
         </div>
 
         <FormProvider {...methods}>
           <form onSubmit={handleSubmit(onSubmit)} style={{ width: "100%" }}>
             <InputHF
-              name="productName"
+              name="name"
               type="text"
               label="Product Name"
               placeholder="Enter product name"
@@ -147,7 +175,7 @@ const MainForm = ({ isOpen, setIsOpen, setProducts }: MainFormProps) => {
               }}
             />
 
-            {/* Start Date */}
+           
             <DateField
               name="startDate"
               label="Available From"
@@ -156,7 +184,7 @@ const MainForm = ({ isOpen, setIsOpen, setProducts }: MainFormProps) => {
               }}
             />
 
-            {/* Buttons */}
+          
             <div
               style={{
                 display: "flex",
@@ -195,7 +223,7 @@ const MainForm = ({ isOpen, setIsOpen, setProducts }: MainFormProps) => {
                   opacity: isSubmitting ? 0.7 : 1,
                 }}
               >
-                {isSubmitting ? "Adding..." : "Add Product"}
+                {item ? "Save Changes" : "Add Product"}
               </ButtonUI>
             </div>
           </form>

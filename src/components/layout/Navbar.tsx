@@ -93,7 +93,7 @@ const Navbar = ({
       </ButtonUI>
 
       {onReset && (
-        <ButtonUI onClick={onReset} background="#dc3545">
+  <ButtonUI onClick={onReset} backgroundColor="#dc3545">
           🔄 Reset Data
         </ButtonUI>
       )}

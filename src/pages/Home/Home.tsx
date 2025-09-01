@@ -12,6 +12,7 @@ import {
   Product,
   FilterState,
 } from "../../utils/localStorage";
+import MainForm from "../../components/common/mainForm";
 
 const Home = () => {
   const [products, setProducts] = useState<Product[]>(() => {
@@ -21,7 +22,8 @@ const Home = () => {
     }
     return ProductDetails;
   });
-
+    const [isOpen, setIsOpen] = useState<boolean>(false);
+const [currentItem, setCurrentItem] = useState<Product | null>(null);
   const [currentPage, setCurrentPage] = useState(() => {
     if (isLocalStorageAvailable()) {
       const savedState = loadFilterStateFromStorage();
@@ -75,9 +77,9 @@ const Home = () => {
       const savedFilterState = loadFilterStateFromStorage();
 
       if (savedProducts || savedFilterState) {
-        let message = "Data loaded from storage ✓";
+        let message = "Data loaded from storage";
         if (savedFilterState) {
-          message = "Data and filters restored ✓";
+          message = "Data and filters restored";
         }
         setSaveStatus(message);
         const timer = setTimeout(() => setSaveStatus(""), 3000);
@@ -170,7 +172,7 @@ const Home = () => {
       setCurrentPage(1);
       setSearchTerm("");
       setOrderBy("name");
-      setSaveStatus("Data reset ✓");
+      setSaveStatus("Data reset");
       const timer = setTimeout(() => setSaveStatus(""), 2000);
       return () => clearTimeout(timer);
     }
@@ -243,13 +245,15 @@ const Home = () => {
         currentItems.map((item) => (
           <Card
             key={item.id}
-            onClick={() => console.log("Card clicked!")}
+            onClick={() => {
+              setCurrentItem(item);
+              setIsOpen(true);
+            }}
             onDelete={() => handleDeleteCard(item.id)}
           >
             <h2>{item.name}</h2>
             <div>{item.description}</div>
-            <div>Price: ${item.price}</div>
-            <div>Start Date: {item.startDate.toDateString()}</div>
+           
           </Card>
         ))
       ) : (
@@ -271,6 +275,9 @@ const Home = () => {
           hasPrev={currentPage > 1}
           hasNext={currentPage < totalPages}
         />
+      )}
+      {isOpen && (
+        <MainForm setIsOpen={setIsOpen} isOpen={isOpen} setProducts={setProducts} item={currentItem} />
       )}
     </div>
   );

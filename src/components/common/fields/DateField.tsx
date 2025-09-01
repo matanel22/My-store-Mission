@@ -35,32 +35,42 @@ const DateField = ({ name, label, validate }: DateFieldProps) => {
         name={name}
         control={control}
         rules={validate}
-        defaultValue=""
-        render={({ field }) => (
-          <input
-            {...field}
-            type="date"
-            onFocus={() => setIsFocused(true)}
-            onBlur={(e) => {
-              setIsFocused(false);
-              field.onBlur();
-            }}
-            style={{
-              width: "100%",
-              padding: "12px 16px",
-              fontSize: "16px",
-              border: `2px solid ${
-                hasError ? "#ef4444" : isFocused ? "#3b82f6" : "#d1d5db"
-              }`,
-              borderRadius: "8px",
-              outline: "none",
-              transition: "all 0.2s ease-in-out",
-              backgroundColor: "#ffffff",
-              color: "#1f2937",
-              boxSizing: "border-box",
-            }}
-          />
-        )}
+        defaultValue={new Date()}
+        render={({ field }) => {
+          // Convert Date object to yyyy-MM-dd string for input value
+          const valueAsString = field.value instanceof Date
+            ? field.value.toISOString().split('T')[0]
+            : field.value;
+          return (
+            <input
+              type="date"
+              value={valueAsString}
+              onChange={e => {
+                const dateValue = e.target.value ? new Date(e.target.value) : null;
+                field.onChange(dateValue);
+              }}
+              onFocus={() => setIsFocused(true)}
+              onBlur={e => {
+                setIsFocused(false);
+                field.onBlur();
+              }}
+              style={{
+                width: "100%",
+                padding: "12px 16px",
+                fontSize: "16px",
+                border: `2px solid ${
+                  hasError ? "#ef4444" : isFocused ? "#3b82f6" : "#d1d5db"
+                }`,
+                borderRadius: "8px",
+                outline: "none",
+                transition: "all 0.2s ease-in-out",
+                backgroundColor: "#ffffff",
+                color: "#1f2937",
+                boxSizing: "border-box",
+              }}
+            />
+          );
+        }}
       />
       {hasError && (
         <p

@@ -1,7 +1,7 @@
 import React from "react";
 
 interface ButtonUIProps {
-  background?: string;
+  backgroundColor?: string;
   onClick?: () => void;
   children: React.ReactNode;
   disabled?: boolean;
@@ -10,7 +10,7 @@ interface ButtonUIProps {
 }
 
 const ButtonUI = ({
-  background,
+  backgroundColor,
   onClick,
   children,
   disabled = false,
@@ -27,7 +27,7 @@ const ButtonUI = ({
         padding: "8px 16px",
         borderRadius: "4px",
         border: "none",
-        background: disabled ? "#ccc" : background || "#007bff",
+        backgroundColor: disabled ? "#ccc" : backgroundColor || "#007bff",
         color: disabled ? "#666" : "#fff",
         ...style,
       }}
